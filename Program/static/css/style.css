@@ -1,0 +1,143 @@
+body{
+  background-color: silver;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.about{
+  text-align: end;
+}
+
+.judul1{ 
+  text-align: center;
+  margin-top: 150px;
+  margin-bottom: 50px;
+  font-size: 70px;
+  color: #662D91;
+}
+
+.judul2{ 
+  text-align: center;
+  color: black;
+  font-size: 20px;
+}
+
+.input-group{
+  text-align: center;
+  display:flex;
+  flex-wrap: wrap;
+  gap: 10;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.input-container{
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-group div{
+  margin: 3% 3%;
+}
+
+input{
+  text-align: center;
+  width: 150px;
+  padding: 10px;
+  margin-top: 15px;
+  background-color: white;
+  /*background-color: #393E46;*/
+  color: black;
+  border-color: #662D91;
+  border-radius: 10px;
+  font-size: 20px;
+  border-width: 5px;
+}
+
+input:focus{
+  outline-style: none;
+  outline-color: none;
+  border: 5px solid red;
+}
+
+label{
+  width: 300px;
+  font-weight: 600;
+  font-size: 24px;
+  color: #662D91;
+  margin-bottom: 5px;
+}
+
+.result-container{
+  margin-top: -10px;
+}
+
+.result{
+  text-align: center;
+  color: black;
+}
+
+#gpa-result{
+  color: black;
+  font-size: x-large;
+  font-weight: 900;
+  margin-bottom: 20px;
+}
+
+.button {
+  margin-top: 10px;
+  background-color: #662D91;
+  font-weight: bold;
+  color: white;
+  padding: 10px 20px;
+  border-color:black;
+  border-width:4px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.button:active {
+  background-color: white;
+  color: black;
+}
+
+.back {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.warning{
+  color: red;
+  font-size: 20px;
+  padding-top: 10px;
+  font-weight: bold;
+}
+
+.backButton {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #662D91;
+  font-weight: bold;
+  color: white;
+  padding: 10px 20px;
+  border-color:black;
+  border-width:4px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.backButton:active {
+  background-color: white;
+  color: black;
+}

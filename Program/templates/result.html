@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="/static/css/result.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Hasil Training</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <button class="backButton" onclick="window.location.href='/train'">Kembali</button>
+    <div class="container">
+        <div class="left-column">
+            <div class="tabs">
+                <div class="tab active" onclick="showTab('tab1')">Raw</div>
+                <div class="tab" onclick="showTab('tab2')">Missing Values</div>
+                <div class="tab" onclick="showTab('tab3')">Outlier</div>
+                <div class="tab" onclick="showTab('tab4')">Clean</div>
+                <div class="tab" onclick="showTab('tab5')">Train</div>
+                <div class="tab" onclick="showTab('tab6')">Grid Search</div>
+                <div class="tab" onclick="showTab('tab7')">SVs</div>
+                <div class="tab" onclick="showTab('tab8')">Test</div>
+            </div>
+            <div id="tab1" class="tab-content active">
+                <h2 class="tabTitle">Data Asli</h2>
+                {% if raw|length > 1 %}
+                  <table class="formattabel">
+                    <thead>
+                      <tr>
+                          <th></th>
+                          <th>y</th>
+                          {% for i in range(1, raw[0]|length) %}
+                          <th>x{{ i }}</th>
+                          {% endfor %}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in range(0, raw|length) %}
+                        <tr>
+                          <td>{{ i+1 }}</td>
+                          {% for j in range(0, raw[i]|length) %}
+                          <td>{{ "%.2f"|format(raw[i][j]) }}</td>
+                          {% endfor %}
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                {% endif %}
+            </div>
+
+            <div id="tab2" class="tab-content">
+              <h2 class="tabTitle">Data Missing Values</h2>
+              {% if missing|length > 0 %}
+                <table class="formattabel">
+                  <thead>
+                    <tr>
+                        <th></th>
+                        <th>y</th>
+                        {% for i in range(1, missing[0]|length) %}
+                        <th>x{{ i }}</th>
+                        {% endfor %}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in range(0, missing|length) %}
+                      <tr>
+                        <td>{{ i+1 }}</td>
+                        {% for j in range(0, missing[i]|length) %}
+                        <td>{{ "%.2f"|format(missing[i][j]) }}</td>
+                        {% endfor %}
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                {%else%}
+                <p class="noMissing">Tidak ada missing value</p>
+              {% endif %}
+            </div>
+
+            <div id="tab3" class="tab-content">
+                <h2 class="tabTitle">Data Outlier</h2>
+                {% if outlier|length > 1 %}
+                  <table class="formattabel">
+                    <thead>
+                      <tr>
+                          <th></th>
+                          <th>y</th>
+                          <th>Z(y)</th>
+                          {% for i in range(1, outlier[0]|length) %}
+                          <th>x{{ i }}</th>
+                          <th>Z(x{{ i }})</th>
+                          {% endfor %}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in range(0, outlier|length) %}
+                        <tr>
+                          <td>{{ i+1 }}</td>
+                          {% for j in range(0, outlier[i]|length) %}
+                          <td>{{ "%.2f"|format(outlier[i][j]) }}</td>
+                          <td>{{ "%.3f"|format(score_outlier[i][j]) }}</td>
+                          {% endfor %}
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                {% endif %}
+            </div>
+
+            <div id="tab4" class="tab-content">
+              <h2 class="tabTitle">Data Bersih</h2>
+              {% if clean|length > 1 %}
+                <table class="formattabel">
+                  <thead>
+                    <tr>
+                        <th></th>
+                        <th>y</th>
+                        {% for i in range(1, clean[0]|length) %}
+                        <th>x{{ i }}</th>
+                        {% endfor %}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in range(0, clean|length) %}
+                      <tr>
+                        <td>{{ i+1 }}</td>
+                        {% for j in range(0, clean[i]|length) %}
+                        <td>{{ "%.2f"|format(clean[i][j]) }}</td>
+                        {% endfor %}
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              {% endif %}
+            </div>
+
+            <div id="tab5" class="tab-content">
+              <h2 class="tabTitle">Data Latih</h2>
+              {% if train|length > 1 %}
+                <table class="formattabel">
+                  <thead>
+                    <tr>
+                        <th></th>
+                        <th>y</th>
+                        {% for i in range(1, train[0]|length) %}
+                        <th>x{{ i }}</th>
+                        {% endfor %}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in range(0, train|length) %}
+                      <tr>
+                        <td>{{ i+1 }}</td>
+                        {% for j in range(0, train[i]|length) %}
+                        <td>{{ "%.2f"|format(train[i][j]) }}</td>
+                        {% endfor %}
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              {% endif %}
+            </div>
+
+            <div id="tab6" class="tab-content">
+              <h2 class="tabTitle">Grid Search Optimization</h2>
+              <table class="formattabel">
+                <thead>
+                    <tr>
+                        <th colspan="3">Parameter</th>
+                        <th rowspan="2">MAE</th>
+                    </tr>
+                    <tr>
+                      <th>\( C \)</th>
+                      <th>\( \gamma \)</th>
+                      <th>\( \epsilon \)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for i in range (0, gs|length) %}
+                    <tr>
+                        <td>{{ gs[i]['C'] }}</td>
+                        <td>{{ gs[i]['gamma'] }}</td>
+                        <td>{{ gs[i]['epsilon'] }}</td>
+                        <td>{{ "%.8f"|format(gs[i]['MAE']) }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+            </div>
+
+            <div id="tab7" class="tab-content">
+              <h2 class="tabTitle">Support Vectors (SVs)</h2>
+              {% if sv|length > 1 %}
+              <table class="formattabel">
+                <thead>
+                    <tr>
+                        <th></th>
+                        {% for i in range(0, sv[0]|length - 1) %}
+                        <th>x{{ i+1 }}</th>
+                        {% endfor %}
+                        <th>\(\alpha_i - \alpha_i^* \)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(0, sv|length) %}
+                      <tr>
+                        <td>{{ i+1 }}</td>
+                        {% for j in range(0, sv[i]|length) %}
+                          {% if j == sv[i]|length - 1 %}
+                            <td>{{ "%.5f"|format(sv[i][j]) }}</td>
+                          {% else %}
+                            <td>{{ "%.2f"|format(sv[i][j]) }}</td>
+                          {% endif %}
+                        {% endfor %}
+                      </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+              {% endif %}
+            </div>
+            <div id="tab8" class="tab-content">
+              <h2 class="tabTitle">Data Hasil Pengujian</h2>
+              {% if test|length > 1 %}
+              <table class="formattabel">
+                <thead>
+                    <tr>
+                        <th></th>
+                        {% for i in range(1, test[0]|length - 2) %}
+                        <th>x{{ i }}</th>
+                        {% endfor %}
+                        <th>y</th>
+                        <th>ŷ</th>
+                        <th>Residual</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(0, test|length) %}
+                    <tr>
+                        <td>{{ i+1 }}</td>
+                        {% for j in range(1, test[i]|length - 2) %}
+                          <td>{{ "%.2f"|format(test[i][j]) }}</td>
+                        {% endfor %}
+                        <td>{{ "%.2f"|format(test[i][0]) }}</td>
+                        <td>{{ "%.6f"|format(test[i][-2]) }}</td>
+                        <td>{{ "%.6f"|format(test[i][-1]) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="right-column">
+          <header>
+            <h1>Results</h1>
+          </header>
+
+          <button class="helpButton" onclick="showHelpPopup()">Help</button>
+
+          <div id="helpPopup" class="helppopup">
+            <h2>Help</h2>
+            <p>Pada sisi kiri terdapat 8 tab antara lain: </p>
+            <p>1. <strong>Raw:</strong> menunjukkan data asli yang diinput oleh user.</p>
+            <p>2. <strong>Missing Values:</strong> menunjukkan baris data yang memiliki data yang hilang (kosong).</p>
+            <p>3. <strong>Outlier:</strong> menunjukkan data yang terdeteksi sebagai outlier.</p>
+            <p>4. <strong>Clean:</strong> menunjukkan data yang sudah bersih dari missing values dan outlier.</p>
+            <p>5. <strong>Train:</strong> menunjukkan data yang digunakan untuk melatih model.</p>
+            <p>6. <strong>Grid Search:</strong> menunjukkan pengujian grid search untuk mencari parameter terbaik.</p>
+            <p>7. <strong>SVs:</strong> menunjukkan Support Vector.</p>
+            <p>8. <strong>Test:</strong> menunjukkan data yang digunakan untuk uji model beserta hasil uji model.</p>
+
+            <br>
+            <p>Pada sisi kanan menunjukkan: </p>
+            <p>1. <strong>Regression Equation:</strong> menunjukkan fungsi regresi yang dihasilkan oleh model.</p>
+            <p>2. <strong>Model Info:</strong> menunjukkan parameter terbaik pada model.</p>
+            <p>3. <strong>Variables Info:</strong> menunjukkan :</p>
+            <p class="indent">- Simultaneous Contribution = kontribusi variabel x terhadap variabel y.</p>
+            <p class="indent">- Partial Contribution = korelasi variabel x terhadap variabel y.</p>
+            <p>4. <strong>ANOVA:</strong> menunjukkan tabel ANOVA untuk pengujian Hipotesis.</p>
+            <p>5. <strong>Evaluation</strong>: menunjukkkan hasil evaluasi model. Terdapat 4 metrik evaluasi model, antara lain :</p>
+            <p class="indent">- <strong>MAE</strong> adalah salah satu metrik evaluasi yang umum digunakan dalam nalisis regresi untuk mengukur seberapa besar kesalahan rata-rata absolut antara nilai yang diprediksi oleh model dan nilai aktual dari data yang diuji. Semakin kecil nilai MAE maka model semakin akurat.</p>
+            <p class="indent">- <strong>MAPE</strong> menghitung rata-rata dari persentase kesalahan absolut antara nilai ang diprediksi dan nilai aktual. Persentase ini memberikan gambaran seberapa jauh hasil prediksi model dibandingkan dengan nilai sebenarnya dalam bentuk persentase. Semakin kecil nilai MAPE maka model semakin akurat.</p>
+            <p class="indent">- <strong>MSE</strong> menghitung rata-rata dari kuadrat selisih antara nilai prediksi dengan nilai aktual. Semakin kecil nilai MSE maka model semakin akurat.</p>
+            <p class="indent">- <strong>R&sup2;</strong> digunakan untuk mengukur seberapa baik model regresi dapat menjelaskan variasi variabel dependen berdasarkan variabel independen. Nilai yang lebih mendekati 1 menunjukkan performa model yang lebih baik.</p>
+            <p>6. <strong>Plot: </strong> menunjukkan plot antara nilai y VS ŷ dan juga plot Residual(Error)</p> 
+            <p id="closeHelpPopup" onclick="hideHelpPopup()" style="color:red; margin-top: 40px">Close</p>
+        </div>
+
+          <div class="regressionEquation">
+            <h2>Regression Equation</h2>
+            <h3>
+              \( f(x) = \sum_{i=1}^{\ell}\)
+                    <span class="lagrange" onclick="showLagrangePopup()">\((\alpha_i - \alpha_i^*) \)</span>
+                    <span class="kernel" onclick="showKernelPopup()">\( k(x_i, x) \)</span>
+              \(+ {{ "%.8f"|format(b) }} \)
+            </h3>
+          </div>
+        
+          <div id="kernelPopup" class="popup">
+            <h2>Kernel Function</h2>
+            <p>Berikut adalah formula dari Kernel RBF:</p>
+            <p style="margin-top: 40px;"> \( K(x_i, x) = \exp(-\gamma \|x_i - x\|^2) \)</p>
+            <p>Keterangan:</p>
+            <p>\(x_i\) : Support Vector</p>
+            <p>\(x\) : Data input</p>
+            <p id="closeKernelPopup" onclick="hideKernelPopup()" style="color:red; margin-top: 40px">Close</p>
+          </div>
+
+          <div class="modelInfo">
+            <h2>Model Info</h2>
+            <table class="formattabel">
+              <thead>
+                  <tr>
+                    <th>Kernel</th>
+                    <th>C</th>
+                    <th>Gamma</th>
+                    <th>Epsilon</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ kernel }}</td>
+                  <td>{{ C }}</td>
+                  <td>{{ gamma }}</td>
+                  <td>{{ epsilon }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+            
+          <div class="kontribusi">
+            <h2>Variables Info</h2>
+            <table class="formattabel">
+              <thead>
+                  <tr>
+                      <th>Variable<br>Name</th>
+                      <th>Simultaneous<br>Contribution</th>
+                      <th>Partial<br>Contribution</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Intercept</td>
+                  <td>{{ "%.4f"|format(x_cont[0]) }}</td>
+                  <td></td>
+                </tr>
+              {% for i in range(0, x_corr|length) %}
+                <tr>
+                  <td>x{{ i+1 }}</td>
+                  <td>{{ "%.4f"|format(x_cont[i+1]) }}</td>
+                  <td>{{ "%.4f"|format(x_corr[i]) }}</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="anova">
+            <h2>Analysis of Variance (ANOVA)</h2>
+            <table class="formattabel">
+              <thead>
+                  <tr>
+                    <th>Source of Variation</th>
+                    <th>Sum of Squares (SS)</th>
+                    <th>Degree of Freedom (df)</th>
+                    <th>Mean of Squares (MS)</th>
+                    <th>F-Value</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Regression</td>
+                  <td>{{ "%.8f"|format(SSR) }}</td>
+                  <td>{{ dfR }}</td>
+                  <td>{{ "%.8f"|format(MSR) }}</td>
+                  <td>{{ "%.8f"|format(F) }}</td>
+                </tr>
+                <tr>
+                  <td>Error</td>
+                  <td>{{ "%.8f"|format(SSE) }}</td>
+                  <td>{{ dfE }}</td>
+                  <td>{{ "%.8f"|format(MSE) }}</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Total</td>
+                  <td>{{ "%.8f"|format(SST) }}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="evaluasi">
+            <h2>Evaluation</h2>
+            <table class="formattabel">
+              <thead>
+                  <tr>
+                    <th>MAE</th>
+                    <th>MAPE</th>
+                    <th>MSE</th>
+                    <th>R&sup2;</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ "%.8f"|format(MAE) }}</td>
+                  <td>{{ "%.8f"|format(MAPE) }}</td>
+                  <td>{{ "%.8f"|format(e_MSE) }}</td>
+                  <td>{{ "%.8f"|format(R2) }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="plotting">
+            <h2>Plot</h2>
+            <div class="imageContainer">
+              <img src="{{ url_for('get_plot', filename='plot1.png') }}" alt="Plot y VS ŷ" style="max-width: 100%; height: auto;">
+            </div>
+            <h3 class="plotText">y VS ŷ</h3>
+            <div class="imageContainer">
+              <img src="{{ url_for('get_plot', filename='plot2.png') }}" alt="Plot Residual" style="max-width: 100%; height: auto;">
+            </div>
+            <h3 class="plotText">Residual</h3>
+          </div>
+
+        </div>
+    
+    <script src="/static/js/result.js"></script>
+    
+  </div>
+</body>
+</html>

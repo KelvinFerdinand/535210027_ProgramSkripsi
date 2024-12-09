@@ -1,0 +1,167 @@
+body{
+  background-color: grey;
+  background-image:url(/static/img/bgUntar.jpg);
+  background-repeat:repeat; 
+  background-size: 100%;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center; 
+  position: relative; 
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.backButton {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #662D91;
+  font-weight: bold;
+  color: white;
+  padding: 10px 20px;
+  border-color:black;
+  border-width:4px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.backButton:active {
+  background-color: white;
+  color: black;
+}
+
+.customHorizontalLine{
+  border: none;
+  border-top: 2px solid #333;
+  margin-top: -20px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+}
+
+.trainModelContainer{
+  background-color: white;
+  border: 1px solid lightgray;
+  text-align: center;
+  justify-items: center;
+  width: 50%; 
+}
+
+.headerText{
+  text-align: center;
+  font-size: xx-large;
+  font-weight: bolder;
+  color: #662D91;
+}
+
+.formContainer{
+  margin: 40px;
+  margin-top: 30px;
+  /* border: 1px solid black; */
+  justify-items: center;
+}
+/* 
+.inputModelName{
+  text-align: start;
+} */
+
+label{
+  font-size: large;
+  font-weight: bold;
+}
+
+.inputFileContainer{
+  /* margin-top: 20px; */
+  text-align: center;
+}
+
+.chooseFile{
+  margin-top: 14px;
+  margin-left: 100px;
+}
+
+.splitData {
+  margin: 60px 0;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.splitDataText {
+  font-size: large;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.trainTestContainer {
+  display: flex;
+  /* align-items: center; */
+}
+
+.input-group {
+  display: flex;
+  align-items: center; 
+}
+
+.trainInputBox{
+  width: 60px;
+  height: 25px;
+  text-align: center;
+}
+
+.testInputGroup {
+  margin-left: 20px;
+}
+
+.feedbackMessage{
+  color:red;
+  font-weight: bold;
+  margin-top: 12px;
+}
+
+.columnHeaderQuestion{
+  margin-top: 40px;
+  display: flex;
+}
+
+input[type="checkbox"] {
+  margin-left: 10px;
+  transform:scale(1.5);
+}
+
+.totalVariableSection{
+  margin-left: 50px;
+}
+
+.totalVariableBox{
+  margin-left: 10px;
+  size: 20px;
+  width: 50px;
+  text-align: center;
+}
+
+.submitButtonContainer{
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.submitButton {
+  background-color: #662D91;
+  font-weight: bold;
+  color: white;
+  padding: 10px 20px;
+  border-color:black;
+  border-width:4px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 30px;
+  
+}
+
+.submitButton:active {
+  background-color: white;
+  color: black;
+}

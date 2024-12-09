@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <!-- <script src="index.js"></script> -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prediksi IPK Mahasiswa</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <button class="backButton" onclick="window.location.href='/'">Kembali</button>
+  <h1 class="judul1">Prediksi IPK Mahasiswa</h1>
+  <p class="judul2">Silahkan masukkan nilai di bawah ini !</p>
+
+  <form id="gpaForm" method="post/">
+  <div class="input-group">
+    <div class="input-container">
+      <label for="algorithms">Intro to Algorithms</label>
+      <input type="text" id="algorithms" name="algorithms" oninput="validateInput(this)" placeholder="Nilai" pattern="[0-9.]*" autocomplete="off" required>
+      <div class="warning" id="algorithms-warning"></div>
+    </div>
+    <div class="input-container">
+      <label for="computation1">Computation I</label>
+      <input type="text" id="computation1" name="computation1" oninput="validateInput(this)" placeholder="Nilai" pattern="[0-9.]*" autocomplete="off" required>
+      <div class="warning" id="computation1-warning"></div>
+    </div>
+    <div class="input-container">
+      <label for="computation2">Computation II</label>
+      <input type="text" id="computation2" name="computation2" oninput="validateInput(this)" placeholder="Nilai" pattern="[0-9.]*" autocomplete="off" required>
+      <div class="warning" id="computation2-warning"></div>
+    </div>
+    <div class="input-container">
+      <label for="datastructures">Data Structures</label>
+      <input type="text" id="datastructures" name="datastructures" oninput="validateInput(this)" placeholder="Nilai" pattern="[0-9.]*" autocomplete="off" required>
+      <div class="warning" id="datastructures-warning"></div>
+    </div>
+  </div>
+  
+<div class="result-container">
+<div class="result">Hasil Prediksi IPK Mahasiswa</div>
+<p id="gpa-result">{{ prediction }}</p>
+  <button class="button" id="predictButton">Mulai Prediksi</button>
+  <button type="button" class="button" id="resetButton">Reset</button>
+</div>
+</form>
+
+  <script>
+    function validateInput(input) {
+      const value = input.value.replace(/,/g, '.');
+      if (!/^[0-9\.]*$/.test(value)) {
+        const warningID = input.id + "-warning";
+        const warningElement = document.getElementById(warningID);
+        warningElement.textContent = "Hanya angka yang diperbolehkan";
+        input.value = input.value.replace(/[^0-9\.]/g, '');
+      } else {
+        const warningID = input.id + "-warning";
+        const warningElement = document.getElementById(warningID);
+        warningElement.textContent = "";
+      }
+    
+      const floatValue = parseFloat(value);
+      if (floatValue < 0.0 || floatValue > 4.0) {
+        input.value = ''
+        const warningID = input.id + "-warning";
+        const warningElement = document.getElementById(warningID);
+        if (floatValue > 4) {
+          warningElement.textContent = "Nilai tidak bisa lebih dari 4";
+        } else if (floatValue < 0) {
+          warningElement.textContent = "Nilai tidak bisa kurang dari 0";
+        }
+      }
+    }
+  </script>
+
+  <script type="text/javascript">
+    $(document).on('click', '#predictButton', function(e) {
+      e.preventDefault();
+      
+       // Check if the form is valid
+    if (!document.getElementById('gpaForm').checkValidity()) {
+      // If not valid, show validation messages
+      document.getElementById('gpaForm').reportValidity();
+      return; // Stop further execution
+    }
+
+      const algorithms = parseFloat(document.getElementById('algorithms').value);
+      const computation1 = parseFloat(document.getElementById('computation1').value);
+      const computation2 = parseFloat(document.getElementById('computation2').value);
+      const datastructures = parseFloat(document.getElementById('datastructures').value);
+      
+      $.ajax({
+        type: 'POST',
+        url: '/predict',
+        data: {
+          'algorithms': algorithms,
+          'computation1': computation1,
+          'computation2': computation2,
+          'datastructures': datastructures
+        },
+        success: function(data) {
+          const formattedGPA = parseFloat(data.gpa).toFixed(2);
+          $('#gpa-result').text(formattedGPA);
+        }
+      });
+      return false;
+    });
+
+    $(document).on('click', '#resetButton', function(e) {
+      location.reload(); // Refresh the page
+    });
+  </script>
+</body>
+</html>

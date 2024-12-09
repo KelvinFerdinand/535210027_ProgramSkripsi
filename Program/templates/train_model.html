@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="/static/css/train_model.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Train Model</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+  <button class="backButton" onclick="window.location.href='/'">Kembali</button>
+
+  <div class="trainModelContainer">
+    <p class="headerText">Train Model</p>
+    <hr class="customHorizontalLine">
+    
+    <form id="trainModelForm" onsubmit="return validateForm()">
+      <div class="formContainer">
+        <!-- <div class="inputModelName">
+          <label for="modelName">Nama Model</label><br>
+          <input type="text" id="modelName" placeholder="input nama model" required>
+        </div> -->
+
+        <div class="inputFileContainer">
+          <label for="inputFile">Input File (xlsx / csv)</label><br>
+          <input class="chooseFile" type="file" id="inputFile" accept=".csv, .xlsx" required>
+        </div>
+
+        <div class="splitData">
+          <p class="splitDataText">Split Data</p>
+          <div class="trainTestContainer">
+            <div class="input-group">
+              <label for="train">Train:</label>
+              <input class="trainInputBox" type="number" id="train" name="train" min="0" max="100" placeholder="0-100" required>%
+            </div>
+            <div class="testInputGroup">
+              <label for="test">Test:</label>
+              <input class="trainInputBox" type="number" id="test" name="test" min="0" max="100" placeholder="auto" readonly>% 
+            </div>
+          </div>
+          <div class="feedbackMessage" id="feedbackMessage"></div>
+        </div>
+
+        <div class="columnHeaderQuestion">
+          <label for="columnHeader">Terdapat Header Kolom?</label>
+          <input type="checkbox" id="columnHeader" name="columnHeader">
+          <label class="totalVariableSection" for="totalVariable">Jumlah Variabel x:</label>
+          <input class="totalVariableBox" type="number" id="totalVariable" name="totalVariable" min="0" required>
+        </div>
+      </div>
+
+      <div class="submitButtonContainer">
+        <button class="submitButton" type="submit">Train</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="/static/js/train_model.js"></script>
+</body>
+</html>

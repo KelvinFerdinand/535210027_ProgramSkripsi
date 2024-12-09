@@ -1,0 +1,72 @@
+body{
+  background-color: grey;
+  background-image:url(/static/img/bgUntarGelapCrop.jpg);
+  background-repeat: no-repeat; 
+  background-size: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+  margin: 0;
+}
+
+.mainMenuContainer{
+  background-color: white;
+  /* border: 1px solid black; */
+  height: 500px;
+  width: 50%;
+}
+
+.logoFTI{
+  text-align: center;
+  margin: 20px;
+}
+
+img{
+  max-width: 30%;
+  height: auto;
+}
+
+.judulSkripsi{
+  margin-top: 50px;
+  /* width: 50%; */
+  /* border: 1px solid black; */
+  text-align: center;
+}
+
+.judulText{
+  font-size: x-large;
+}
+
+.buttonContainer{
+  margin-top: 50px;
+  /* border: 1px solid black; */
+  text-align: center;
+}
+
+.button {
+  background-color: #662D91;
+  font-weight: bold;
+  color: white;
+  padding: 10px 20px;
+  border-color:black;
+  border-width:4px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.button:active {
+  background-color: white;
+  color: black;
+}
+
+.authorContainer{
+  margin-top: 10px;
+  text-align: center;
+}
+
+.authorText{
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+}

@@ -1,0 +1,195 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+  display: flex; 
+  height: 100vh;
+}
+
+.left-column {
+  flex: 0 0 60%; 
+  background-color: #f0f0f0;
+  padding: 20px;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.backButton {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #662D91;
+  font-weight: bold;
+  color: white;
+  padding: 10px 20px;
+  border-color:black;
+  border-width:4px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.backButton:active {
+  background-color: white;
+  color: black;
+}
+
+.tabTitle{
+  text-align: center;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 2px solid #ccc;
+  margin-bottom: 10px;
+  margin-top: 70px;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #e0e0e0;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  margin-right: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.tab.active {
+  background-color: #662D91;
+  color: white;
+  /* font-weight: bold; */
+}
+
+.tab-content {
+  display: none;
+  padding: 10px;
+  background-color: white;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.noMissing{
+  text-align: center;
+  font-weight: light;
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 5px solid #662D91;;
+  padding: 20px;
+  z-index: 1000;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.helppopup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 5px solid #662D91;;
+  padding: 20px;
+  z-index: 1000;
+  max-height: 80vh;
+  overflow-y: auto;
+  width: max-content;
+  max-width: 60%;
+  text-align: justify;
+  line-height: 1.5;
+}
+
+.indent{
+  margin-left: 20px;
+  margin-right: 20px;
+  line-height: 1.5;
+}
+
+.right-column {
+  flex: 0 0 40%; /* 40% width */
+  background-color: #d0d0d0;
+  padding: 20px;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.helpButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #662D91;
+  font-weight: bold;
+  color: white;
+  padding: 10px 20px;
+  border-color:black;
+  border-width:4px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.helpButton:active {
+  background-color: white;
+  color: black;
+}
+
+header{
+  text-decoration: underline;
+}
+
+.modelInfo{
+  margin-top: 40px;
+}
+
+.kontribusi{
+  margin-top: 40px;
+}
+
+.formattabel{
+  width: 100%; /* Make the table take the full width */
+  border-collapse: collapse; /* Collapse borders */
+  margin-top: 20px; /* Add some margin above the table */
+}
+
+th, td {
+  background-color: white;
+  border: 1px solid black; 
+  padding: 8px; 
+  text-align: center; 
+}
+
+.anova{
+  margin-top: 40px;
+}
+
+.evaluasi{
+  padding-top: 40px;
+}
+
+.plotting{
+  padding-top: 40px;
+  padding-bottom: 10px;
+}
+
+.imageContainer{
+  height: 427px;
+}
+
+.plotText{
+  margin-top: 60px;
+  text-align: center;
+}
