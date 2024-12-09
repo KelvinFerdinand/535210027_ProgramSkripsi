@@ -5,8 +5,8 @@ Cara install program :
 2. Buka folder tersebut pada Visual Studio Code.
 3. Buka terminal baru.
 4. Run Command di bawah ini (Secara berurutan):
--> python -m venv myenv
--> myenv/Scripts/activate
--> pip install -r requirements.txt
--> Python app.py
-6. Setelah itu tekan link yang muncul pada terminal
+   - python -m venv myenv
+   - myenv/Scripts/activate
+   - pip install -r requirements.txt
+   - Python app.py
+5. Setelah itu tekan link yang muncul pada terminal
